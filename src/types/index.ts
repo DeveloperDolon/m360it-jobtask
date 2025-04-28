@@ -48,7 +48,7 @@ export interface Product {
   thumbnail: string;
   images: string[];
   availabilityStatus: "In Stock" | "Low Stock" | "Out of Stock";
-  dimensions: Dimensions;
+  dimensions?: Dimensions;
   minimumOrderQuantity: number;
   returnPolicy: string;
   shippingInformation: string;
@@ -56,6 +56,12 @@ export interface Product {
   weight: number;
   tags: string[];
   sku: string;
-  meta: Meta;
-  reviews: Review[];
+  meta?: Meta;
+  reviews?: Review[];
+}
+
+export interface TCategory {
+  name: string;
+  slug: string;
+  url: string;
 }

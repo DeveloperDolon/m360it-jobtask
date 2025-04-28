@@ -141,7 +141,7 @@ const ProductTable = () => {
       record[dataIndex]
         ?.toString()
         .toLowerCase()
-        .includes((value as string).toLowerCase()),
+        .includes((value as string).toLowerCase()) || false,
     filterDropdownProps: {
       onOpenChange(open) {
         if (open) {

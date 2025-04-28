@@ -14,7 +14,7 @@ const MainLayout = () => {
   } = theme.useToken();
   return (
     <Layout className="min-h-screen">
-      <Sider trigger={null} collapsible collapsed={collapsed}>
+      <Sider trigger={null} collapsible collapsed={collapsed} style={{maxHeight: "100vh"}}>
         <div className="demo-logo-vertical">
           <img src={logo} alt="Company logo" className="p-6" />
         </div>
@@ -25,7 +25,7 @@ const MainLayout = () => {
           items={dashboardRoutes}
         />
       </Sider>
-      <Layout>
+      <Layout style={{maxHeight: "100vh", overflow: "scroll"}}>
         <Header style={{ padding: 0, background: colorBgContainer }}>
           <Button
             type="text"
@@ -42,7 +42,6 @@ const MainLayout = () => {
           style={{
             margin: "24px 16px",
             padding: 24,
-            minHeight: 280,
             background: colorBgContainer,
             borderRadius: borderRadiusLG,
           }}

@@ -32,7 +32,7 @@ const ProductUpdate = () => {
   const { id } = useParams();
 
   return (
-    <div>
+    <div className="">
       <h1 className="md:text-3xl sm:text-2xl text-xl font-semibold text-center">
         Update Product
       </h1>

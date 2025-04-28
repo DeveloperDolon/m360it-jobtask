@@ -1,5 +1,8 @@
 import { createBrowserRouter } from "react-router";
 import MainLayout from "../layouts/MainLayout";
+import Overview from "../pages/overview/Overview";
+import routeExtract from "../utils/routeExtract";
+import productRoutes from "./product.routes";
 
 const MainRoute = createBrowserRouter([
   {
@@ -8,8 +11,9 @@ const MainRoute = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <h1>Hello world from home page</h1>,
+        element: <Overview />,
       },
+      ...routeExtract(productRoutes),
     ],
   },
 ]);

@@ -5,22 +5,17 @@ import { Button, Input, Space, Table } from "antd";
 import type { FilterDropdownProps } from "antd/es/table/interface";
 import Highlighter from "react-highlight-words";
 import { useProductListQuery } from "../../store/api/product.api";
+import { Product } from "../../types";
 
-interface DataType {
-  key: string;
-  name: string;
-  age: number;
-  address: string;
-}
-
-type DataIndex = keyof DataType;
+type DataIndex = keyof Product;
 
 const ProductTable = () => {
-  const { data, isFetching } = useProductListQuery({
+  const { data: productList, isFetching } = useProductListQuery({
     limit: 10,
     skip: 0,
   });
-  console.log(data);
+  console.log(productList);
+  const data = productList?.products;
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef<InputRef>(null);
@@ -42,7 +37,7 @@ const ProductTable = () => {
 
   const getColumnSearchProps = (
     dataIndex: DataIndex
-  ): TableColumnType<DataType> => ({
+  ): TableColumnType<Product> => ({
     filterDropdown: ({
       setSelectedKeys,
       selectedKeys,
@@ -133,31 +128,53 @@ const ProductTable = () => {
       ),
   });
 
-  const columns: TableColumnsType<DataType> = [
+  const columns: TableColumnsType<Product> = [
     {
       title: "Name",
-      dataIndex: "name",
-      key: "name",
-      width: "30%",
-      ...getColumnSearchProps("name"),
-    },
-    {
-      title: "Age",
-      dataIndex: "age",
-      key: "age",
+      dataIndex: "title",
+      key: "title",
       width: "20%",
-      ...getColumnSearchProps("age"),
+      ...getColumnSearchProps("title"),
     },
     {
-      title: "Address",
-      dataIndex: "address",
-      key: "address",
-      ...getColumnSearchProps("address"),
-      sorter: (a, b) => a.address.length - b.address.length,
-      sortDirections: ["descend", "ascend"],
+      title: "Price",
+      dataIndex: "price",
+      key: "price",
+      width: "10%",
+      ...getColumnSearchProps("price"),
     },
+    {
+      title: "Stock",
+      dataIndex: "stock",
+      key: "stock",
+      ...getColumnSearchProps("stock"),
+    },
+    {
+      title: "Category",
+      dataIndex: "category",
+      key: "category",
+      ...getColumnSearchProps("category"),
+    },
+    {
+      title: "Brand",
+      dataIndex: "brand",
+      key: "brand",
+      ...getColumnSearchProps("brand"),
+    },
+    {
+        title: "Action",
+        dataIndex: "id",
+        key: "id",
+        render: (id: number) => (
+            <div>
+                <Button size="small">Edit</Button>
+                <Button size="small">Delete</Button>
+            </div>
+        ) 
+    }
   ];
 
-  return <Table<DataType> columns={columns} dataSource={data} />;
+  return <Table<Product> columns={columns} dataSource={data} />;
 };
+
 export default ProductTable;

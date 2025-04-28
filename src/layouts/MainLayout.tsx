@@ -1,15 +1,12 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
-  UploadOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
 } from "@ant-design/icons";
 import { Button, Layout, Menu, theme } from "antd";
 import { Outlet } from "react-router";
 import logo from "../assets/logo.png";
-import productRoutes from "../routes/product.routes";
+import { dashboardRoutes } from "../routes/product.routes";
 
 const { Header, Sider, Content } = Layout;
 
@@ -28,16 +25,7 @@ const MainLayout = () => {
           theme="dark"
           mode="inline"
           defaultSelectedKeys={["1"]}
-          items={productRoutes.map((route) => ({
-            key: route.key,
-            icon: React.createElement(route.icon),
-            label: route.label,
-            children: route.children?.map((child) => ({
-              key: child.key,
-              label: child.label,
-              icon: React.createElement(child.icon),
-            })),
-          }))}
+          items={dashboardRoutes}
         />
       </Sider>
       <Layout>

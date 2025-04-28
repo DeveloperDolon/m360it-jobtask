@@ -1,6 +1,6 @@
-import { TDashboardRoute } from "../types";
+import { DashboardRoute } from "../types";
 
-const routeExtract = (routeList: TDashboardRoute[]) => {
+const routeExtract = (routeList: DashboardRoute[]) => {
   return routeList?.map((route) => {
     return {
       path: route?.path,

@@ -1,15 +1,15 @@
-import { ReactNode } from "react";
+import React from "react";
 
 export type TPagination = {
   limit: number;
   skip: number;
 };
 
-export type TDashboardRoute = {
-    key: number;
-    path: string;
-    label: string;
-    icon: React.ElementType;
-    element: ReactNode;
-    children?: TDashboardRoute[];
+export interface DashboardRoute {
+  path: string;
+  key: string;
+  label: React.ReactNode;
+  icon: React.ReactNode;
+  children?: DashboardRoute[];
+  element: React.ReactNode;
 }

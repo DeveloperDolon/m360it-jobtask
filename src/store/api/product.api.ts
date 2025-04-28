@@ -1,4 +1,4 @@
-import { TPagination } from "../../types";
+import { Product, TPagination } from "../../types";
 import { baseApi } from "./baseApi";
 
 const productApi = baseApi.injectEndpoints({
@@ -11,9 +11,21 @@ const productApi = baseApi.injectEndpoints({
     }),
     productDetails: builder.query({
       query: (id: number) => `/product/${id}`,
-      providesTags: ["product"]
+      providesTags: ["product"],
+    }),
+    productUpdate: builder.mutation({
+      query: ({ id, payload }: { id: number; payload: Product }) => ({
+        url: `/products/${id}`,
+        method: "PATCH",
+        body: payload,
+      }),
+      invalidatesTags: ["product"],
     }),
   }),
 });
 
-export const { useProductListQuery, useProductDetailsQuery } = productApi;
+export const {
+  useProductListQuery,
+  useProductDetailsQuery,
+  useProductUpdateMutation,
+} = productApi;

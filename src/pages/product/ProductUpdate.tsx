@@ -40,7 +40,7 @@ const EditProductForm = ({ productId }: { productId: number }) => {
 
   // RTK Query hooks
   const { data: product, isLoading: isProductLoading } = useProductDetailsQuery(productId);
-  const { data: categories = [], isLoading: isCategoriesLoading } = useCategoryListQuery();
+  const { data: categories = [], isLoading: isCategoriesLoading } = useCategoryListQuery(1);
   const [updateProduct] = useUpdateProductMutation();
 
   // Set form values when product data is loaded

@@ -11,6 +11,7 @@ const productApi = baseApi.injectEndpoints({
     }),
     productDetails: builder.query({
       query: (id: number) => `/product/${id}`,
+      providesTags: ["product"]
     }),
   }),
 });

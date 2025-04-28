@@ -33,7 +33,7 @@ const EditProductForm = ({ productId }: { productId: number }) => {
 
   const { data: product, isLoading: isProductLoading } =
     useProductDetailsQuery(productId);
-  const { data: categories = [], isLoading: isCategoriesLoading } =
+  const { data: categories = [] } =
     useCategoryListQuery(1);
   const [updateProduct] = useProductUpdateMutation();
 

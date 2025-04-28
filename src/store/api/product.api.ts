@@ -9,7 +9,10 @@ const productApi = baseApi.injectEndpoints({
       }),
       providesTags: ["product"],
     }),
+    productDetails: builder.query({
+      query: (id: number) => `/product/${id}`,
+    }),
   }),
 });
 
-export const { useProductListQuery } = productApi;
+export const { useProductListQuery, useProductDetailsQuery } = productApi;

@@ -1,3 +1,4 @@
+
 import ProductTable from "./ProductTable";
 
 const ProductList = () => {

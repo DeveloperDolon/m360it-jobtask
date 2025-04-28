@@ -1,6 +1,11 @@
 import { useRef, useState } from "react";
 import { SearchOutlined } from "@ant-design/icons";
-import type { InputRef, TableColumnsType, TableColumnType } from "antd";
+import type {
+  InputRef,
+  TableColumnsType,
+  TableColumnType,
+  TablePaginationConfig,
+} from "antd";
 import { Button, Input, Space, Table } from "antd";
 import type { FilterDropdownProps } from "antd/es/table/interface";
 import Highlighter from "react-highlight-words";
@@ -9,13 +14,33 @@ import { Product } from "../../types";
 
 type DataIndex = keyof Product;
 
+interface Pagination {
+  current: number;
+  pageSize: number;
+  total?: number;
+}
+
 const ProductTable = () => {
-  const { data: productList, isFetching } = useProductListQuery({
-    limit: 10,
-    skip: 0,
+  const [pagination, setPagination] = useState<Pagination>({
+    current: 1,
+    pageSize: 10,
+    total: 0,
   });
-  console.log(productList);
-  const data = productList?.products;
+
+  const apiParams = {
+    limit: pagination.pageSize,
+    skip: (pagination.current - 1) * pagination.pageSize,
+  };
+
+  const { data: productList, isFetching } = useProductListQuery(apiParams);
+
+  if (
+    productList?.total !== undefined &&
+    productList.total !== pagination.total
+  ) {
+    setPagination((prev) => ({ ...prev, total: productList.total }));
+  }
+
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef<InputRef>(null);
@@ -33,6 +58,14 @@ const ProductTable = () => {
   const handleReset = (clearFilters: () => void) => {
     clearFilters();
     setSearchText("");
+  };
+
+  const handleTableChange = (newPagination: TablePaginationConfig) => {
+    setPagination({
+      current: newPagination.current || 1,
+      pageSize: newPagination.pageSize || 10,
+      total: newPagination.total,
+    });
   };
 
   const getColumnSearchProps = (
@@ -105,7 +138,7 @@ const ProductTable = () => {
     ),
     onFilter: (value, record) =>
       record[dataIndex]
-        .toString()
+        ?.toString()
         .toLowerCase()
         .includes((value as string).toLowerCase()),
     filterDropdownProps: {
@@ -141,12 +174,14 @@ const ProductTable = () => {
       dataIndex: "price",
       key: "price",
       width: "10%",
+      sorter: (a, b) => a.price - b.price,
       ...getColumnSearchProps("price"),
     },
     {
       title: "Stock",
       dataIndex: "stock",
       key: "stock",
+      sorter: (a, b) => a.stock - b.stock,
       ...getColumnSearchProps("stock"),
     },
     {
@@ -162,19 +197,38 @@ const ProductTable = () => {
       ...getColumnSearchProps("brand"),
     },
     {
-        title: "Action",
-        dataIndex: "id",
-        key: "id",
-        render: (id: number) => (
-            <div>
-                <Button size="small">Edit</Button>
-                <Button size="small">Delete</Button>
-            </div>
-        ) 
-    }
+      title: "Action",
+      dataIndex: "id",
+      key: "id",
+      render: (id: number) => (
+        <Space>
+          <Button size="small">Edit</Button>
+          <Button size="small" danger>
+            Delete
+          </Button>
+        </Space>
+      ),
+    },
   ];
 
-  return <Table<Product> columns={columns} dataSource={data} />;
+  return (
+    <Table<Product>
+      columns={columns}
+      dataSource={productList?.products || []}
+      loading={isFetching}
+      pagination={{
+        current: pagination.current,
+        pageSize: pagination.pageSize,
+        total: pagination.total,
+        showSizeChanger: true,
+        pageSizeOptions: ["10", "20", "50", "100"],
+        showTotal: (total, range) =>
+          `${range[0]}-${range[1]} of ${total} items`,
+      }}
+      onChange={handleTableChange}
+      rowKey="id"
+    />
+  );
 };
 
 export default ProductTable;

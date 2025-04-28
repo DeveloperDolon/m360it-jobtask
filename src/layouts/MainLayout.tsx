@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -9,6 +9,7 @@ import {
 import { Button, Layout, Menu, theme } from "antd";
 import { Outlet } from "react-router";
 import logo from "../assets/logo.png";
+import productRoutes from "../routes/product.routes";
 
 const { Header, Sider, Content } = Layout;
 
@@ -27,23 +28,16 @@ const MainLayout = () => {
           theme="dark"
           mode="inline"
           defaultSelectedKeys={["1"]}
-          items={[
-            {
-              key: "1",
-              icon: <UserOutlined />,
-              label: "nav 1",
-            },
-            {
-              key: "2",
-              icon: <VideoCameraOutlined />,
-              label: "nav 2",
-            },
-            {
-              key: "3",
-              icon: <UploadOutlined />,
-              label: "nav 3",
-            },
-          ]}
+          items={productRoutes.map((route) => ({
+            key: route.key,
+            icon: React.createElement(route.icon),
+            label: route.label,
+            children: route.children?.map((child) => ({
+              key: child.key,
+              label: child.label,
+              icon: React.createElement(child.icon),
+            })),
+          }))}
         />
       </Sider>
       <Layout>

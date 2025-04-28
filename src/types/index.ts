@@ -6,8 +6,10 @@ export type TPagination = {
 };
 
 export type TDashboardRoute = {
+    key: number;
     path: string;
     label: string;
     icon: React.ElementType;
     element: ReactNode;
+    children?: TDashboardRoute[];
 }

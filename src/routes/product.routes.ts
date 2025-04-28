@@ -23,5 +23,5 @@ export const dashboardRoutes: DashboardRoute[] = [
     ),
     icon: React.createElement(ProductOutlined),
     element: React.createElement(ProductList),
-  },
+  }
 ];

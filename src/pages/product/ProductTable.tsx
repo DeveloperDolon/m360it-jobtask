@@ -11,6 +11,7 @@ import type { FilterDropdownProps } from "antd/es/table/interface";
 import Highlighter from "react-highlight-words";
 import { useProductListQuery } from "../../store/api/product.api";
 import { Product } from "../../types";
+import { NavLink } from "react-router";
 
 type DataIndex = keyof Product;
 
@@ -202,7 +203,9 @@ const ProductTable = () => {
       key: "id",
       render: (id: number) => (
         <Space>
-          <Button size="small">Edit</Button>
+          <NavLink to={`/product/edit/${id}`}>
+            <Button size="small">Edit</Button>
+          </NavLink>
           <Button size="small" danger>
             Delete
           </Button>

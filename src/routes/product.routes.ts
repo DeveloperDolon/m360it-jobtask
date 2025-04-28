@@ -1,8 +1,5 @@
 import React from "react";
-import {
-  PieChartOutlined,
-  ProductOutlined,
-} from "@ant-design/icons";
+import { PieChartOutlined, ProductOutlined } from "@ant-design/icons";
 import { NavLink } from "react-router";
 import Overview from "../pages/overview/Overview";
 import ProductList from "../pages/product/ProductList";
@@ -19,7 +16,11 @@ export const dashboardRoutes: DashboardRoute[] = [
   {
     path: "/product-list",
     key: "2",
-    label: React.createElement(NavLink, { to: "/product-list" }, "Product list"),
+    label: React.createElement(
+      NavLink,
+      { to: "/product-list" },
+      "Product list"
+    ),
     icon: React.createElement(ProductOutlined),
     element: React.createElement(ProductList),
   },

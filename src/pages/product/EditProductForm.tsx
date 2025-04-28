@@ -13,7 +13,6 @@ import {
   Divider,
   Card,
   Upload,
-  message,
 } from "antd";
 import {
   UploadOutlined,
@@ -23,18 +22,18 @@ import {
 import type { UploadProps } from "antd";
 import { Product, TCategory } from "../../types";
 import { useCategoryListQuery } from "../../store/api/category.api";
+import { MessageInstance } from "antd/es/message/interface";
 
 const { TextArea } = Input;
 const { Option } = Select;
 
-const EditProductForm = ({ productId }: { productId: number }) => {
+const EditProductForm = ({ productId, messageApi }: { productId: number, messageApi: MessageInstance }) => {
   const [form] = Form.useForm<Product>();
   const [loading, setLoading] = useState(false);
 
   const { data: product, isLoading: isProductLoading } =
     useProductDetailsQuery(productId);
-  const { data: categories = [] } =
-    useCategoryListQuery(1);
+  const { data: categories = [] } = useCategoryListQuery(1);
   const [updateProduct] = useProductUpdateMutation();
 
   useEffect(() => {
@@ -52,9 +51,9 @@ const EditProductForm = ({ productId }: { productId: number }) => {
         console.log(info.file, info.fileList);
       }
       if (info.file.status === "done") {
-        message.success(`${info.file.name} file uploaded successfully`);
+        messageApi.success(`${info.file.name} file uploaded successfully`);
       } else if (info.file.status === "error") {
-        message.error(`${info.file.name} file upload failed.`);
+        messageApi.error(`${info.file.name} file upload failed.`);
       }
     },
   };
@@ -70,11 +69,12 @@ const EditProductForm = ({ productId }: { productId: number }) => {
       };
 
       await updateProduct(payload).unwrap();
-
-      message.success("Product updated successfully");
+      console.log("first");
+      messageApi.success("Product updated successfully");
+      console.log(messageApi)
     } catch (error) {
       console.error("Update failed:", error);
-      message.error("Failed to update product");
+      messageApi.error("Failed to update product");
     } finally {
       setLoading(false);
     }

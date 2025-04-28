@@ -1,4 +1,5 @@
 import { useParams } from "react-router";
+import EditProductForm from "./EditProductForm";
 
 const ProductUpdate = () => {
   const { id } = useParams();

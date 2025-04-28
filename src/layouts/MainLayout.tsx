@@ -20,8 +20,8 @@ const MainLayout = () => {
   return (
     <Layout className="min-h-screen">
       <Sider trigger={null} collapsible collapsed={collapsed}>
-        <div className="demo-logo-vertical" >
-            <img src={logo} alt="Company logo" className="p-6" />
+        <div className="demo-logo-vertical">
+          <img src={logo} alt="Company logo" className="p-6" />
         </div>
         <Menu
           theme="dark"
